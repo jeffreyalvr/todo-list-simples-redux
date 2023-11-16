@@ -4,7 +4,7 @@ import Footer from "./components/Footer";
 
 const App = () => {
   return (
-    <div className="container flex flex-col gap-6 mx-auto">
+    <div className="container flex flex-col gap-6 mx-auto md:w-[40rem]">
       <Header />
       <Box />
       <Footer />
