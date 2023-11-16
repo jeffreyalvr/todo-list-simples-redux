@@ -80,6 +80,7 @@ const Box = () => {
         <input
           type="text"
           className="px-4 py-1 rounded-md border-2 flex-grow"
+          placeholder="Digite algo aqui..."
           value={newTodo}
           onChange={(e) => handleInput(e)}
           onKeyDown={(e) => handleKeyDown(e)}
