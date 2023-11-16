@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Box = () => {
   const [todos, setTodos] = useState([
@@ -8,6 +8,13 @@ const Box = () => {
     { text: "Ir para a academia", completed: true, id: 3 },
     { text: "Meditar", completed: false, id: 4 },
   ]);
+  const [newTodo, setNewTodo] = useState("");
+  const [buttonEnabled, setButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    if (!newTodo.length) return setButtonEnabled(false);
+    setButtonEnabled(true);
+  }, [newTodo]);
 
   const completedTodoStyle = ["line-through italic text-gray-500"];
 
@@ -18,6 +25,32 @@ const Box = () => {
       )
     );
   };
+
+  const getLastId = todos.reduce((highestId, currentTodo) => {
+    return currentTodo.id > highestId ? currentTodo : highestId;
+  });
+
+  const handleInput = (e) => {
+    setNewTodo(e.target.value);
+  };
+
+  const handleLimparInput = () => {
+    setNewTodo("");
+  };
+
+  const handleAdicionar = () => {
+    if (!buttonEnabled || !newTodo.length) return;
+
+    let newTodoObject = {
+      text: newTodo.toString(),
+      completed: false,
+      id: getLastId,
+    };
+
+    setTodos((prevState) => [...prevState, newTodoObject]);
+    handleLimparInput();
+  };
+
   return (
     <div className="container flex flex-col">
       <div className="flex flex-col p-10 rounded-md border-2 text-xl">
@@ -37,6 +70,24 @@ const Box = () => {
             </div>
           ))
         )}
+      </div>
+      <div className="flex flex-row gap-3 mt-7">
+        <input
+          type="text"
+          className="px-4 py-1 rounded-md border-2 flex-grow"
+          value={newTodo}
+          onChange={(e) => handleInput(e)}
+        />
+        <button
+          className={`px-4 py-1 rounded-md ${
+            buttonEnabled
+              ? ["bg-blue-500 cursor-pointer"]
+              : ["bg-gray-400 cursor-default"]
+          } text-white font-bold`}
+          onClick={() => handleAdicionar()}
+        >
+          Adicionar
+        </button>
       </div>
     </div>
   );
