@@ -38,6 +38,11 @@ const Box = () => {
     setNewTodo("");
   };
 
+  const handleKeyDown = (e) => {
+    if (!buttonEnabled) return;
+    if (e.keyCode === 13) handleAdicionar();
+  };
+
   const handleAdicionar = () => {
     if (!buttonEnabled || !newTodo.length) return;
 
@@ -77,6 +82,7 @@ const Box = () => {
           className="px-4 py-1 rounded-md border-2 flex-grow"
           value={newTodo}
           onChange={(e) => handleInput(e)}
+          onKeyDown={(e) => handleKeyDown(e)}
         />
         <button
           className={`px-4 py-1 rounded-md ${
