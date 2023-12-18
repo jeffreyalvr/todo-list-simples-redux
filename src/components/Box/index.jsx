@@ -91,7 +91,7 @@ const Box = () => {
               ? ["bg-blue-500 cursor-pointer"]
               : ["bg-gray-400 cursor-default"]
           } text-white font-bold`}
-          onClick={() => handleAdicionar()}
+          onClick={handleAdicionar}
         >
           Adicionar
         </button>
