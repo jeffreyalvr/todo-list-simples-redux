@@ -2,6 +2,8 @@ import Header from "./components/Header";
 import Box from "./components/Box";
 import Footer from "./components/Footer";
 
+import "./styles/global.css";
+
 const App = () => {
   return (
     <div className="container flex flex-col gap-10 mx-auto md:w-[40rem]">
