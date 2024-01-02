@@ -1,13 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { TodosContext } from "../../Contexts/TodosContext";
 
 const Box = () => {
-  const [todos, setTodos] = useState([
-    { text: "Estudar desenvolvimento web", completed: false, id: 0 },
-    { text: "Estudar francês", completed: false, id: 1 },
-    { text: "Treinar guitarra", completed: true, id: 2 },
-    { text: "Ir para a academia", completed: true, id: 3 },
-    { text: "Meditar", completed: false, id: 4 },
-  ]);
+  const { todos, setTodos } = useContext(TodosContext);
+
   const [newTodo, setNewTodo] = useState("");
   const [buttonEnabled, setButtonEnabled] = useState(false);
 
