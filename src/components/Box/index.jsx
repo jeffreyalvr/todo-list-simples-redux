@@ -1,8 +1,10 @@
-import { useState, useEffect, useContext } from "react";
-import { TodosContext } from "../../Contexts/TodosContext";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { adicionarMeta } from "../../state/todos/todosSlice";
 
 const Box = () => {
-  const { todos, setTodos } = useContext(TodosContext);
+  const todos = useSelector((state) => state.todos.value);
+  const dispatch = useDispatch();
 
   const [newTodo, setNewTodo] = useState("");
   const [buttonEnabled, setButtonEnabled] = useState(false);
@@ -15,16 +17,21 @@ const Box = () => {
   const completedTodoStyle = ["line-through italic text-gray-500"];
 
   const toggleTodo = (todoId) => {
-    setTodos((prevState) =>
-      prevState.map((todo) =>
-        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+    // TODO: adaptar para o redux
+    // setTodos((prevState) =>
+    //   prevState.map((todo) =>
+    //     todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
+    //   )
+    // );
   };
 
-  const getLastId = todos.reduce((highestId, currentTodo) => {
-    return currentTodo.id > highestId ? currentTodo : highestId;
-  });
+  const getLastId = (todos) => {
+    if (todos.length === 0) return 0;
+
+    return todos.reduce((highestId, currentTodo) => {
+      return currentTodo.id > highestId ? currentTodo.id : highestId;
+    }, 0);
+  };
 
   const handleInput = (e) => {
     setNewTodo(e.target.value);
@@ -42,13 +49,15 @@ const Box = () => {
   const handleAdicionar = () => {
     if (!buttonEnabled || !newTodo.length) return;
 
+    const lastId = getLastId(todos);
+
     let newTodoObject = {
       text: newTodo.toString(),
       completed: false,
-      id: getLastId,
+      id: todos.length === 0 ? 0 : lastId + 1,
     };
 
-    setTodos((prevState) => [...prevState, newTodoObject]);
+    dispatch(adicionarMeta(newTodoObject));
     handleLimparInput();
   };
 
