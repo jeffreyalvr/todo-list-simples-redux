@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { adicionarMeta } from "../../state/todos/todosSlice";
+import { adicionarMeta, alterarEstado } from "../../state/todos/todosSlice";
 
 const Box = () => {
   const todos = useSelector((state) => state.todos.value);
@@ -17,12 +17,7 @@ const Box = () => {
   const completedTodoStyle = ["line-through italic text-gray-500"];
 
   const toggleTodo = (todoId) => {
-    // TODO: adaptar para o redux
-    // setTodos((prevState) =>
-    //   prevState.map((todo) =>
-    //     todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
-    //   )
-    // );
+    dispatch(alterarEstado(todoId));
   };
 
   const getLastId = (todos) => {

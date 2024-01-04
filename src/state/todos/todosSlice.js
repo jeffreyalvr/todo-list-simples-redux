@@ -17,9 +17,15 @@ const todosSlice = createSlice({
     adicionarMeta: (state, action) => {
       state.value = [...state.value, action.payload];
     },
-    marcarConcluida: (state, action) => {},
+    alterarEstado: (state, action) => {
+      state.value = state.value.map((value) =>
+        value.id === action.payload
+          ? { ...value, completed: !value.completed }
+          : value
+      );
+    },
   },
 });
 
-export const { adicionarMeta, marcarConcluida } = todosSlice.actions;
+export const { adicionarMeta, alterarEstado } = todosSlice.actions;
 export default todosSlice.reducer;
